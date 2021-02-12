@@ -9,6 +9,6 @@ public class HealthController {
 
     @GetMapping("/health")
     public String health() {
-        return "hello world";
+        return "hello world GKE";
     }
 }
