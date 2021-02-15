@@ -22,6 +22,7 @@ on:
   push:
     branches:
     - main
+    - nilmadhab/gcp-test
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -55,6 +56,12 @@ jobs:
     - run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
+    # this step builds our app in PROD
+    - name: Generate Jar files in Github runner
+      run: |-
+        sudo apt-get update && apt-get upgrade && apt-get autoremove
+        sudo apt-get install openjdk-8-jdk openjdk-8-jre mysql-server maven
+        sudo mvn clean package
     # Build the Docker image
     - name: Build
       run: |-
